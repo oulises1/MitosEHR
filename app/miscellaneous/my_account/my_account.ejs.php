@@ -22,8 +22,9 @@ $_SESSION['site']['flops'] = 0;
 
 ?>
 <script type="text/javascript">
+delete Ext.mitos.Page;
 Ext.onReady(function(){
-    Ext.define('Ext.mitos.myAccountPage',{
+    Ext.define('Ext.mitos.Page',{
 		extend:'Ext.panel.Panel',
 		uses:[
 			'Ext.mitos.CRUDStore',
@@ -165,16 +166,16 @@ Ext.onReady(function(){
                         msgTarget : 'under',
                         items: [
                             { width: 110, xtype: 'displayfield', value: '<?php i18n('Default Facility'); ?>: '},
-                              Ext.create('Ext.mitos.FacilitiesComboBox', {width: 170 }),
+                              new Ext.create('Ext.mitos.FacilitiesComboBox', {width: 170 }),
                             { width: 100, xtype: 'displayfield', value: '<?php i18n('Authorizations'); ?>: '},
-                              Ext.create('Ext.mitos.AuthorizationsComboBox', {width: 175 })
+                              new Ext.create('Ext.mitos.AuthorizationsComboBox', {width: 175 })
                         ]
                     },{
                         xtype: 'fieldcontainer',
                         defaults: { hideLabel: true },
                         items: [
                             { width: 110, xtype: 'displayfield', value: '<?php i18n('Access Control'); ?>: '},
-                              Ext.create('Ext.mitos.RolesComboBox', {width: 170 }),
+                              new Ext.create('Ext.mitos.RolesComboBox', {width: 170 }),
                             { width: 100, xtype: 'displayfield', value: '<?php i18n('Taxonomy'); ?>: '},
                             { width: 175, xtype: 'textfield', name: 'taxonomy' }
                         ]
@@ -294,7 +295,7 @@ Ext.onReady(function(){
 			page.callParent(arguments);
 		} // end of initComponent
 	}); //ens oNotesPage class
-    Ext.create('Ext.mitos.myAccountPage');
+    Ext.create('Ext.mitos.Page');
 }); // End ExtJS
 </script>
 

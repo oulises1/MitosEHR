@@ -31,15 +31,16 @@ $layoutFactorer = new layoutEngine();
 //******************************************************************************
 $_SESSION['site']['flops'] = 0;
 ?>
-
 <script type="text/javascript">
+delete Ext.mitos.Panel;
 Ext.onReady(function(){
-	Ext.define('Ext.mitos.PatientPanel',{
+	Ext.define('Ext.mitos.Panel',{
 		extend:'Ext.panel.Panel',
 		uses:[
 			'Ext.mitos.CRUDStore',
 			'Ext.mitos.RenderPanel',
-			'Ext.mitos.SaveCancelWindow'
+			'Ext.mitos.SaveCancelWindow',
+                'Ext.mitos.PhotoIdWindow'
 		],
 		initComponent: function(){
 		
@@ -48,7 +49,25 @@ Ext.onReady(function(){
             
             var panel = this;
 			var form_id = 'Demographics'; 	// Stores the current form group selected by the user.
-			
+
+			// *************************************************************************************
+            // Photo Ip Window and panel
+            // *************************************************************************************
+            panel.patienPhotoId = new Ext.create('Ext.mitos.PhotoIdWindow',{
+                title: '<?php i18n("Patient Photo Id", "e"); ?>',
+                dockedItems:{
+                    xtype: 'toolbar',
+                    dock: 'bottom',
+                    items: [{
+                        text: '<?php i18n("Capture Image", "e"); ?>',
+        			    iconCls: 'save',
+                        handler: function(){
+
+                        }
+                    }]
+                }
+            });
+
 			// *************************************************************************************
 			// Dynamically generate the screen layout.
 			// This is done, via PHP Language.
@@ -58,9 +77,9 @@ Ext.onReady(function(){
 				$layoutFactorer->renderForm("Demographics", "app/patient_file/new", "New Patient", 300, i18n("Save new patient", "r") ); 
 			?>
 			
-			//***********************************************************************************
+			// *************************************************************************************
 			// Attach the dockbar to the demographics form.
-			//***********************************************************************************
+			// *************************************************************************************
 			panel.Demographics.addDocked({
         		xtype: 'toolbar',
         		dock: 'top',
@@ -84,16 +103,21 @@ Ext.onReady(function(){
 						panel.Demographics.load();
 						Ext.topAlert.msg('<?php i18n("New patient as been saved!", "e"); ?>');
 					}
-        		}]
+        		},'->',{
+                    text:'Take a Picture',
+                    handler: function(){
+                        panel.patienPhotoId.show();
+                    }
+                }]
     		});
 
-			//***********************************************************************************
+			// *************************************************************************************
 			// Top Render Panel 
 			// This Panel needs only 3 arguments...
 			// PageTigle 	- Title of the current page
 			// PageLayout 	- default 'fit', define this argument if using other than the default value
 			// PageBody 	- List of items to display [form1, grid1, grid2]
-			//***********************************************************************************
+			// *************************************************************************************
     		new Ext.create('Ext.mitos.RenderPanel', {
         		pageTitle: '<?php i18n("Patient Entry Form"); ?>',
 				border	: true,
@@ -105,7 +129,7 @@ Ext.onReady(function(){
 		} // end of initComponent
 		
 	}); //ens PatientPanel class
-    Ext.create('Ext.mitos.PatientPanel');
+    Ext.create('Ext.mitos.Panel');
     
 }); // End ExtJS
 

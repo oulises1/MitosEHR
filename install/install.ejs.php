@@ -20,6 +20,9 @@ if(!defined('_MitosEXEC')) die('No direct access allowed.');
 <script type="text/javascript">
 Ext.require(['*']);
 Ext.onReady(function() {
+    var obj;
+    var conn;
+    var field;
 	// *************************************************************************************
 	// Structure, data for storeReq
 	// AJAX -> requirements.ejs.php
@@ -80,6 +83,7 @@ Ext.onReady(function() {
 		id				: 'winCopyright',
 		width			: 800,
 		height			: 500,
+        y               : 130,
 		closeAction		: 'hide',
 		bodyStyle		: 'background-color: #ffffff; padding: 5px;',
 		modal			: false,
@@ -123,7 +127,6 @@ Ext.onReady(function() {
 		id				: 'formInstall',
         bodyStyle		: 'padding:5px',
         border			: false,
-        height			: 450,
         url				: 'install/logic.ejs.php',
         layout			: 'fit',
         fieldDefaults	: {
@@ -189,28 +192,25 @@ Ext.onReady(function() {
 		            value: '<span style="color:green;">* A Site can have multiples clinics.</span>'
                 },{
 			    	xtype: 'displayfield',
-		            value: '<span style="color:green;">* If dont want to use your clinic\'s name you can type "default"</span>'
-		        },{
-			    	xtype: 'displayfield',
 		            value: '<span style="color:green;">* Why "Site Name" and no "Clinic\' Name"?</span> Basically because you can have more than one installation using the same webserver. ei. Two physician that share the same office but no their patients.'
 		        },{
 			    	xtype: 'displayfield',
 		            value: '<span style="color:green;">* more tips to come...</span>'
                 }],
-		        buttons: [{
-		            text	: 'Back',
-		            handler	: function() {
-						Ext.getCmp('tabsInstall').setActiveTab(0);
-		        	}
-		        },{
-		            text	: 'Next',
-		            id		:'clinicInfoNext',
-		            disabled: true,
-		            handler	: function() {
-		            	Ext.getCmp('databaseInfo').enable();
-						Ext.getCmp('tabsInstall').setActiveTab(2);
-		        	}
-		        }]
+                    buttons: [{
+                        text	: 'Back',
+                        handler	: function() {
+                            Ext.getCmp('tabsInstall').setActiveTab(0);
+                        }
+                    },{
+                        text	: 'Next',
+                        id		:'clinicInfoNext',
+                        disabled: true,
+                        handler	: function() {
+                            Ext.getCmp('databaseInfo').enable();
+                            Ext.getCmp('tabsInstall').setActiveTab(2);
+                        }
+                    }]
             },{
                 title		: 'Database Info',
                 defaults	: {width: 530},
@@ -327,18 +327,18 @@ Ext.onReady(function() {
 			            var form = this.up('form').getForm();
 			            if (form.isValid()) {
 			                form.submit({
-			                	method:'POST', 
+			                	method:'POST',
 			                	params: {
 				                    task: 'connType',
 				                    conn: conn
 				                },
 			                    success: function(form, action) {
-			                    obj = Ext.JSON.decode(action.response.responseText);
+			                    var obj = Ext.JSON.decode(action.response.responseText);
 			                       Ext.Msg.alert('Sweet!', obj.msg);
 			                       Ext.getCmp('dataInfoNext').enable();
 			                    },
 			                    failure: function(form, action) {
-			                    obj = Ext.JSON.decode(action.response.responseText);
+			                    var obj = Ext.JSON.decode(action.response.responseText);
 			                        Ext.Msg.alert('Oops!', obj.msg);
 			                        Ext.getCmp('dataInfoNext').disable();
 			                    }
@@ -420,16 +420,15 @@ Ext.onReady(function() {
 	var winSiteSetup = new Ext.create('widget.window', {
 	    title		: 'MitosEHR Requirements',
 	    id			: 'winSiteSetup',
-	    closable	: true,
+	    closable    : false,
+        y           : 130,
 	    width		: 600,
-		height		: 500,
 		bodyPadding	: 2,
 		closeAction	: 'hide',
 	    plain		: true,
 		modal		: false,
 		resizable	: false,
 		draggable	: false,
-		closable	: false,
 	    bodyStyle	: 'background-color: #ffffff; padding: 5px;',
 	    items		: [ reqGrid ],
 	    dockedItems	: [{
@@ -455,16 +454,15 @@ Ext.onReady(function() {
 	var winInstall = new Ext.create('widget.window', {
 	    title		: 'MitosEHR Installation',
 	    id			: 'winInstall',
-	    closable	: true,
+	    closable	: false,
+        y           : 130,
 	    width		: 600,
-		height		: 500,
 		bodyPadding	: 2,
 		closeAction	: 'hide',
 	    plain		: true,
 		modal		: false,
 		resizable	: false,
 		draggable	: false,
-		closable	: false,
 	    bodyStyle	: 'background-color: #ffffff; padding: 5px;',
 	    items		: [ formInstall ]
 	});

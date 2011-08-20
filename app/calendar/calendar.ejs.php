@@ -23,8 +23,8 @@ $_SESSION['site']['flops'] = 0;
 <link rel="stylesheet" type="text/css" href="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/examples/examples.css" />
 <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext_cal'] ?>/examples/examples.js"></script>
 <script type="text/javascript">
+delete Ext.mitos.Calendar;
 Ext.onReady(function(){
-
     Ext.define('Ext.mitos.Calendar', {
         require:[
             'Extensible.calendar.data.MemoryCalendarStore',
@@ -284,7 +284,7 @@ Ext.onReady(function(){
             // PageBody 	- List of items to display [form1, grid1, grid2]
             //***********************************************************************************
             new Ext.create('Ext.mitos.RenderPanel', {
-                pageTitle: '<?php i18n('Calendar Test'); ?>',
+                pageTitle: '<?php i18n('Appointments Calendar'); ?>',
                 pageLayout: 'border',
                 pageBody: [this.leftCol, this.calendar ]
             });

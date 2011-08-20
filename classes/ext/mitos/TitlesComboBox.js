@@ -1,6 +1,12 @@
 Ext.define('Ext.mitos.TitlesComboBox',{
 	extend      : 'Ext.form.ComboBox',
     alias       : 'mitos.titlescombobox',
+    width       : 50,
+    name        : 'title',
+    editable    : false,
+    displayField: 'title',
+    valueField  : 'option_id',
+    queryMode   : 'local',
     initComponent: function(){	
     	var me = this;
 
@@ -21,7 +27,7 @@ Ext.define('Ext.mitos.TitlesComboBox',{
 			proxy		: {
 				type		: 'ajax',
 				url			: 'lib/layoutEngine/listOptions.json.php',
-				extraParams	: {"filter": "title"},
+				extraParams	: {"filter": "titles"},
 				reader	: {
 					type			: 'json',
 					idProperty		: 'option_id',
@@ -34,14 +40,7 @@ Ext.define('Ext.mitos.TitlesComboBox',{
 			
 
     	Ext.apply(this, {
-    		width       : 50,
-    		name        : 'title',
-    		editable    : false,
-    		displayField: 'title',
-    		valueField  : 'option_id',
-    		queryMode   : 'local',
-    		store       : me.storeTypes
-
+    		store: me.storeTypes
 		});
 		me.callParent();
 	} // end initComponent
